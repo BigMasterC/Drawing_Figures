@@ -1,0 +1,147 @@
+
+/* Using "1" or "0" to represent True/False */
+int is_valid_int(int number) {
+    /* 0 or negative value is provided for number*/
+    if (number == 0 || number < 0) {
+        printf("Invalid data provided. \n");
+        return 0;
+    } else {
+        /*The number inputted in valid*/
+        return 1;
+    }
+}
+
+/* Using "1" or "0" to represent True/False */
+/*Determines whether a character used while drawing a rectangle or 
+triangle or another shape is valid*/
+int valid_character(char valid_char) {
+
+    switch (valid_char) {
+    case '*':
+        /*Do something*/
+        break;
+    case '%':
+        /*Do something*/
+        break;
+    case '#':
+        /*Do something*/
+        break;
+    default:
+        /*Invalid character*/
+        printf("Invalid data provided. \n");
+        /*Code ran unsuccessfully*/
+        return 0;
+    }
+
+    return 1;
+}
+
+/* Function takes in 3 arguments representing the different user inputs.
+User will input the rectangle's width, length, and desired character (that is to
+be printed out). The function will return 0 is any parameter is invalid and
+returns 1 if printing took place (all argumented passed in are valid)*/
+int draw_rectangle(int width, int length, char desired_char) {
+
+    int row, col;
+
+    if (valid_character(desired_char) == 0 || is_valid_int(width) == 0 
+    || is_valid_int(length) == 0) {
+        return 0; /*At least ONE parameter is invalid*/
+    } else if (valid_character(desired_char) == 1 && is_valid_int(width) == 1 
+    && is_valid_int(length) == 1) {
+        for (row = 1; row <= width; row++) {
+            for (col = 1; col <= length; col++) {
+                printf("%c", desired_char);
+            }
+            /*After each row, move onto the next line*/
+            printf("\n"); /*printing a new line*/
+        }
+        return 1;
+    }
+    return 0;
+}
+/* function takes in 2 arguments one being the size of the triangle and the
+other being the character that is to be printed. The function will return 0 if 
+any parameter is invalid and 1 otherwise.
+*/
+int draw_triangle(int size, char desired_char) {
+
+    int row = 1, col = 1, k = 1;
+
+    if (valid_character(desired_char) == 0 || is_valid_int(size) == 0) {
+        return 0; /*At least ONE parameter is invalid*/
+    } else if (valid_character(desired_char) == 1 && is_valid_int(size) == 1) {
+        for (row = 1; row <= size; row++) {
+            for (col = 1; col <= size - row; col++) {
+
+                printf(" ");
+            }
+
+            for (k = 1; k <= (2 * row - 1); k++) {
+
+                printf("%c", desired_char);
+            }
+
+            /*After each row, move onto the next line*/
+            printf("\n"); /*printing a new line*/
+        }
+        return 1;
+    }
+    return 0; /*If failing test CHECK HERE!*/
+}
+
+/*function that prompts the user to enter their desired printing input
+
+Makes use of a switch statement based on the value of option */
+
+int prompt() {
+
+    int option = 1, width, length, size;
+    char desired_char; /*The user's desired character input*/
+
+    /*Essentially..."the user's option isn't '0'."*/
+    while (option != 0) {
+
+        printf("Enter 1(rectangle), 2(triangle), 3(other), 0(quit): ");
+
+        scanf(" %d", &option);
+        /*Fair note to self, that kid from Discussion said this might not work*/
+
+        switch (option) {
+        case 0:
+            printf("Bye Bye.\n");
+            /*goodbye message to the user :'C*/
+            break;
+        case 1:
+            printf("Enter character, width and length: ");
+            scanf(" %c%d%d", &desired_char, &width, &length);
+            /*When the user inputs "1"...use this function*/
+            draw_rectangle(width, length, desired_char);
+            break;
+        case 2:
+            printf("Enter character and size: ");
+            scanf(" %c%d", &desired_char, &size);
+            /*When the user inputs "2"...use this function*/
+            draw_triangle(size, desired_char);
+            break;
+        case 3:
+            printf("You've chosen to draw another figure (Be creative)! :D\n");
+            /*I actually don't know yet ¯\_( ͡° ͜ʖ ͡°)_/¯ */
+            break;
+        default:
+            /* a situation in which any other value other than the ones 
+            specified above is inputted by the user*/
+            printf("Invalid choice.\n");
+        }
+    }
+
+    return 0;
+    /*should always return exit status "0" indicating that 
+    the program ran well*/
+}
+
+int main() {
+    /*QUESTION: does the compiler only run the 'main' function*/
+    prompt();
+    return 0;
+}
